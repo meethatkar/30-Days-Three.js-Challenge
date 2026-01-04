@@ -62,7 +62,7 @@ function animate() {
   requestAnimationFrame(animate)
 
   pyramid.rotation.y += 0.01
-  pyramid.rotation.x = Math.sin(performance.now() * 0.0002) * 0.3
+  pyramid.rotation.x = Math.sin(performance.now() * 0.002) * 2
 
   controls.update()
   renderer.render(scene, camera)

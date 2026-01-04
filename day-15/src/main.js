@@ -35,7 +35,7 @@ loader.load("/fonts/third.ttf", (font) => {
     size: 1,
     depth: 0.1,
     curveSegments: 6,
-    bevelEnabled: true,
+    bevelEnabled: true,   //curve effect, gives 3D vibes, not just plane straight line of normal 3D
     bevelThickness: 0.08,
     bevelSize: 0.01,
     bevelOffset: 0,
@@ -55,15 +55,20 @@ loader.load("/fonts/third.ttf", (font) => {
 })
 
 // PARTICLES
-const particleCount = 2000;
+const particleCount = 200;
 const positions = new Float32Array(particleCount * 3);
 const velocities = new Float32Array(particleCount * 3);
 
-// Initialize particle positions and velocities
+// Initialize particle positions and velocities (i += 3 because we process them in groups of 3 (X, Y, Z))
 for (let i = 0; i < particleCount * 3; i += 3) {
+  // --- POSITIONS (Where they start) ---
+  // Math.random()      -> gives number from 0 to 1
+  // - 0.5              -> shifts it to be from -0.5 to 0.5 (Centered)
+  // * 20               -> stretches it to be from -10 to 10
+
   positions[i] = (Math.random() - 0.5) * 20;     // x
   positions[i + 1] = (Math.random() - 0.5) * 20;  // y
-  positions[i + 2] = (Math.random() - 0.5) * 20;  // z
+  positions[i + 2] = (Math.random() - 0.5) * 10;  // z
   
   velocities[i] = (Math.random() - 0.5) * 0.02;     // vx
   velocities[i + 1] = (Math.random() - 0.5) * 0.02; // vy
@@ -103,9 +108,6 @@ scene.add(pointLight2);
 // CIRCLES
 const circles = [];
 const ringCount = 6;
-const startScale = 0.8;
-const endScale = 6;
-const ringGrowSpeed = 0.01;
 for (let i = 0; i < ringCount; i++) {
   const geo = new THREE.RingGeometry(1, 1.05, 32);
   const hue = (i / ringCount) * 0.3 + 0.7; // Purple to pink gradient
@@ -117,10 +119,6 @@ for (let i = 0; i < ringCount; i++) {
     transparent: true 
   })
   const ring = new THREE.Mesh(geo, mat);
-  // ring.position.x = Math.PI * 0.05;
-  // ring.position.z = -0.5 - i * 0.25;
-  // const initial = startScale + i * 0.2;
-  // ring.scale.set(initial, initial, initial);
   circles.push(ring);
   scene.add(ring)
 }
@@ -129,7 +127,7 @@ let audioContext;
 
 window.addEventListener("click", () => {
   if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioContext = new (window.AudioContext)();
     sound.play();
   }
 
@@ -201,7 +199,7 @@ function audioReactivePulse() {
   });
 
   if (textMesh) {
-    textMesh.position.y = beat * 0.3;
+    textMesh.position.y = beat * 0.1;
   }
   
   // Audio reactive particle scaling

@@ -40,12 +40,12 @@ const mistMat = new THREE.MeshBasicMaterial({
   transparent: true,
   opacity: 0.5, 
   depthWrite: false,
-  blending: THREE.AdditiveBlending,
+  blending: THREE.AdditiveBlending,     //if objects are overlapping, instead of making them dark, it makes them light (glow)
   color: 0x5577bb
 })
 
 const mistPlan = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 20),
+  new THREE.PlaneGeometry(100, 100),
   mistMat
 );
 mistPlan.position.set(0, 0, 5);
