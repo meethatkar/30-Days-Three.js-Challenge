@@ -9,9 +9,6 @@ const canvas = document.getElementById('canvas')
 // Create scene
 const scene = new THREE.Scene()
 
-let mouseX;
-let mouseY;
-
 window.addEventListener("mousemove", (e)=>{
   material.uniforms.xVal.value =e.clientX/window.innerWidth;
   material.uniforms.yVal.value =e.clientY/window.innerHeight;
@@ -38,7 +35,6 @@ const material = new THREE.ShaderMaterial({
   fragmentShader: fragment,
   side: THREE.DoubleSide,
   uniforms:{
-    uTime: {value: 0},
     xVal: {value: 0},
     yVal: {value: 0}
   }
@@ -46,14 +42,6 @@ const material = new THREE.ShaderMaterial({
  material.needsUpdate = true;
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
-
-// Add lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-scene.add(ambientLight)
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
-directionalLight.position.set(5, 5, 5)
-scene.add(directionalLight)
 
 // Animation loop
 function animate() {

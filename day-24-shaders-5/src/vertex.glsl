@@ -10,7 +10,7 @@ void main(){
 
   vec3 pos = position;
 
-  float wave = sin(pos.x * 3.0 + uTime) * 0.3;
+  float wave = sin(pos.x * 3.0 + uTime) * 0.1;
   pos += normal * wave;
 
   vY = pos.y;
